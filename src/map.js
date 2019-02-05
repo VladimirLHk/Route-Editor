@@ -27,9 +27,10 @@ class MyMap extends Component {
     onBoundsChange = () => {
         let newMapCenter = this.map.getCenter();
         let moveMap = this.props.moveMap;
+        moveMap(newMapCenter, "");
         this.ymaps.geocode(newMapCenter).then(function (res) {
-            let adress = res.geoObjects.get(0).getAddressLine();
-            moveMap(newMapCenter, adress);
+            let address = res.geoObjects.get(0).getAddressLine();
+            moveMap(newMapCenter, address);
             this.setState({center: newMapCenter});
         });
     };
@@ -38,9 +39,10 @@ class MyMap extends Component {
         let coords = e.get('target').geometry.getCoordinates();
         let pointNum = e.get('target').properties.get('pointId').substr(3);
         let movePoint = this.props.movePoint;
+        movePoint(pointNum, coords, "");
         this.ymaps.geocode(coords).then(function (res) {
-            let adress = res.geoObjects.get(0).getAddressLine();
-            movePoint(pointNum, coords, adress);
+            let address = res.geoObjects.get(0).getAddressLine();
+            movePoint(pointNum, coords, address);
         });
     };
 
@@ -70,7 +72,7 @@ class MyMap extends Component {
                         }}
                         properties={{
                             balloonContentBody: "Это точка '"+point.content+"'",
-                            hintContent: point.adress,
+                            hintContent: point.address,
                             pointId: point.id,
                         }}
             />)
@@ -125,34 +127,3 @@ class MyMap extends Component {
 }
 
 export default MyMap;
-
-//событие при отпускании мыши с плейсмарка
-// myPlacemark.events.add('dragend',
-// function (e) {
-// var coords = e.get('target').geometry.getCoordinates();
-// ymaps.geocode(coords).then(function (res) {
-// var first = res.geoObjects.get(0),
-// name1 = first.properties.get('name');
-// alert(name1);
-// });
-// });
-
-/*
-myPlacemark.properties.set('iconCaption', 'поиск...');
-ymaps.geocode(coords).then(function (res) {
-    var firstGeoObject = res.geoObjects.get(0);
-
-    myPlacemark.properties
-        .set({
-            // Формируем строку с данными об объекте.
-            iconCaption: [
-                // Название населенного пункта или вышестоящее административно-территориальное образование.
-                firstGeoObject.getLocalities().length ? firstGeoObject.getLocalities() : firstGeoObject.getAdministrativeAreas(),
-                // Получаем путь до топонима, если метод вернул null, запрашиваем наименование здания.
-                firstGeoObject.getThoroughfare() || firstGeoObject.getPremise()
-            ].filter(Boolean).join(', '),
-            // В качестве контента балуна задаем строку с адресом объекта.
-            balloonContent: firstGeoObject.getAddressLine()
-        });
-});
-*/

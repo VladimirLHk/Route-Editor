@@ -8,14 +8,14 @@ const MAP_PROPS = {
     center: [55.76, 37.64],
     zoom: 10,
     controls: ['zoomControl'],
-}
+};
 
 class RouteEdit extends Component {
     constructor (props) {
         super(props);
         this.r = new Route();
         this.mapCenter = [];
-        this.mapCenterAdress = '';
+        this.mapCenterAddress = '';
 
         this.state = {
             items: [],
@@ -31,7 +31,7 @@ class RouteEdit extends Component {
 
     addNewPoint (name) {
 
-       this.r.addPoint(name, this.mapCenter, this.mapCenterAdress);
+       this.r.addPoint(name, this.mapCenter, this.mapCenterAddress);
        this.setState({
            items: this.r.getAllNames(),
            coords: this.r.getAllCoords(),
@@ -56,25 +56,23 @@ class RouteEdit extends Component {
         });
     }
 
-    movePoint (pointId, newCoords, newAdress) {
-        this.r.changePointCoords (pointId, newCoords);
-        this.r.setPointAdress(pointId, newAdress);
+    movePoint (pointId, newCoords, newAddress) {
+        this.r.changePointCoords (pointId, newCoords, newAddress);
+//        this.r.setPointAddress(pointId, newAddress);
         this.setState({
             items: this.r.getAllNames(),
             coords: this.r.getAllCoords(),
         });
-//        console.log('После изменения координат точки: ', this.state.coords);
     }
 
-    moveMap (newCenter, adress) {
+    moveMap (newCenter, address) {
         this.mapCenter = newCenter;
-        this.mapCenterAdress = adress;
-//        console.log ('После изменения центра карты: ', this.mapCenter, this.mapCenterAdress);
+        this.mapCenterAddress = address;
     }
 
     render () {
         return (
-            <div>
+            <div className={'main'}>
                 <div className={"ControlBlock"}>
                     <HandlePoints
                         pointArr = {this.state.items}

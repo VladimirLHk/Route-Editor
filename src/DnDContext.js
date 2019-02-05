@@ -55,11 +55,11 @@ class DnDList extends Component {
                                             )
                                             }
                                         >
-                                            <table>
+                                            <table className={'DragableBlock'}>
                                                 <tbody>
                                                 <tr>
                                                     <td className="Text">{item.content}</td>
-                                                    <td ><span className="Del" id={item.id}>&ensp;X&ensp;</span></td>
+                                                    <td ><span className="Del" id={item.id}>X</span></td>
                                                 </tr>
                                                 </tbody>
                                             </table>
@@ -78,3 +78,5 @@ class DnDList extends Component {
 }
 
 export default DnDList;
+
+//&ensp;

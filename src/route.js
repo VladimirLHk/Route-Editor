@@ -1,4 +1,5 @@
 class Route {
+    NOADDRESS = "Адресс ещё неопределен <br> Измените положение точки или границы карты";
     constructor () {
         //массив объектов, описывающих маршрут
         this.route = [];
@@ -6,12 +7,12 @@ class Route {
     }
 
     //добавление новой точки маршрута
-    addPoint (name, coords, adress) {
+    addPoint (name, coords, address) {
         let newPoint = {
             name: name,
             coords: coords,
         };
-        if (adress) newPoint.adress = adress;
+        newPoint.address = address === "" ? this.NOADDRESS : address;
         this.route.push(newPoint);
     }
 
@@ -21,8 +22,11 @@ class Route {
     }
 
     //изменение координат точки
-    changePointCoords (pointId, newCoords) {
-        if (this.isPointIdInRoute(pointId)) this.route[pointId].coords = newCoords;
+    changePointCoords (pointId, newCoords, newAddress) {
+        if (this.isPointIdInRoute(pointId)) {
+            this.route[pointId].coords = newCoords;
+            this.route[pointId].address = newAddress === "" ? this.NOADDRESS : newAddress;
+        }
     }
 
     //передвинуть точку с номером startId так, чтобы в итоге она встала на место с номером endId
@@ -52,15 +56,15 @@ class Route {
         let names = this.getAllNames();
         return names.map((item, index) => {
             item.coords = this.route[index].coords;
-            if (this.route[index].adress) item.adress = this.route[index].adress;
+            if (this.route[index].address) item.address = this.route[index].address;
             return item
         });
 //        return res;
     }
 
     //присвоение адреса точке с номером pointId
-    setPointAdress (pointId, pointAdress) {
-        if (this.isPointIdInRoute(pointId)) this.route[pointId].adress = pointAdress;
+    setPointAddress (pointId, pointAddress) {
+        if (this.isPointIdInRoute(pointId)) this.route[pointId].address = pointAddress;
     }
 
     //находится ли номер точки в пределах текущего количества точек в маршруте

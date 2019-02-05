@@ -42,12 +42,14 @@ class HandlePoints extends Component {
         return (
             <div onClick={this.handleDeleteButton}>
                 <div className={"pointName"}>
-                    <input className={"Text"}
-                           ref='pointName'
-                           type={'text'}
-                           placeholder={'Введите имя точки'}
-                           onKeyUp={this.handleEnterInput}
-                    />
+                    <div className={"pointInput"}>
+                        <input className={"pointName-Text"}
+                               ref='pointName'
+                               type={'text'}
+                               placeholder={'Введите имя точки'}
+                               onKeyUp={this.handleEnterInput}
+                        />
+                    </div>
                     <input type={'button'} value={'OK'} onClick={this.handleOkButton}/>
                 </div>
                 <DnDList className={"DnDBlock"}
